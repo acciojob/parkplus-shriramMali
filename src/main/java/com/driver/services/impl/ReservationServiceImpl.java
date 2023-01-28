@@ -31,11 +31,19 @@ public class ReservationServiceImpl implements ReservationService {
         Spot spot11=null;
         for(Spot spot:spotList){
             if(timeInHours*spot.getPricePerHour()<min){
-               spot11=spot;
-               min=timeInHours*spot.getPricePerHour();
+
+              if((numberOfWheels==2 && (spot.getSpotType()==SpotType.TWO_WHEELER || spot.getSpotType()==SpotType.FOUR_WHEELER || spot.getSpotType()==SpotType.OTHERS))
+                      || (numberOfWheels==4 && (spot.getSpotType()==SpotType.FOUR_WHEELER || spot.getSpotType()==SpotType.OTHERS)) || numberOfWheels>4 && spot.getSpotType()==SpotType.OTHERS)
+
+              {   spot11=spot;
+                  min=timeInHours*spot.getPricePerHour();
+              }
             }
         }
 
+        if(min==Integer.MAX_VALUE ||userRepository3.findById(userId).get()==null){
+            throw new Exception("Cannot make reservation");
+        }
        parkingLot.getSpotList().add(spot11);
 
      return null;
