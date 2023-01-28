@@ -16,7 +16,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Integer userId) {
     User user=userRepository4.findById(userId).get();
+    if(user.getReservationList().contains(user))
     user.getReservationList().remove(user);
+
+    if (userRepository4.existsById(userId))
     userRepository4.delete(user);
     }
 
