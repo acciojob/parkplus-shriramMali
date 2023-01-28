@@ -11,6 +11,7 @@ public class User {
     private String name;
     private String phnoeNumber;
     private String password;
+    private int a;
 
     public User(){
 
