@@ -16,6 +16,14 @@ public class Spot {
     @JoinColumn
     private ParkingLot parkingLot;
 
+    public Spot(){}
+
+    public Spot(int pricePerHour, SpotType spotType, boolean occupied) {
+        this.pricePerHour = pricePerHour;
+        this.spotType = spotType;
+        this.occupied = occupied;
+    }
+
     @OneToMany(mappedBy = "reservation",cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
 

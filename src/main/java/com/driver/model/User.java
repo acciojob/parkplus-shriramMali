@@ -9,24 +9,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String phnoeNumber;
+    private String phoneNumber;
     private String password;
     private int a;
 
     public User(){
-
     }
 
-    public User(String name, String phnoeNumber, String password, List<Reservation> reservationList) {
+    public User(String name, String phoneNumberr, String password, List<Reservation> reservationList) {
         this.name = name;
-        this.phnoeNumber = phnoeNumber;
+        this.phoneNumber = phoneNumberr;
         this.password = password;
         this.reservationList = reservationList;
     }
 
-    public User(String name, String phnoeNumber, String password) {
+    public User(String name, String phoneNumber, String password) {
         this.name = name;
-        this.phnoeNumber = phnoeNumber;
+        this.phoneNumber = phoneNumber;
         this.password = password;
     }
 
@@ -49,12 +48,12 @@ public class User {
         this.name = name;
     }
 
-    public String getPhnoeNumber() {
-        return phnoeNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhnoeNumber(String phnoeNumber) {
-        this.phnoeNumber = phnoeNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {
