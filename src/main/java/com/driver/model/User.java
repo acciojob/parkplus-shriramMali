@@ -12,6 +12,17 @@ public class User {
     private String phnoeNumber;
     private String password;
 
+    public User(){
+
+    }
+
+    public User(String name, String phnoeNumber, String password, List<Reservation> reservationList) {
+        this.name = name;
+        this.phnoeNumber = phnoeNumber;
+        this.password = password;
+        this.reservationList = reservationList;
+    }
+
     public User(String name, String phnoeNumber, String password) {
         this.name = name;
         this.phnoeNumber = phnoeNumber;
