@@ -1,6 +1,7 @@
 package com.driver.controllers;
 
 import com.driver.model.Payment;
+import com.driver.model.Reservation;
 import com.driver.services.impl.PaymentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/payment")
 public class PaymentController {
-	
-	@Autowired
+
+    @Autowired
     PaymentServiceImpl paymentService;
 
     @PostMapping("/pay")

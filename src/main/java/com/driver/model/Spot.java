@@ -1,31 +1,42 @@
 package com.driver.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Spot {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int pricePerHour;
+
+    @Enumerated(EnumType.STRING)
     private SpotType spotType;
-    private boolean occupied;
+
+    private int pricePerHour;
+
+    @Column(columnDefinition = "TINYINT(1)")
+    private Boolean occupied;
 
     @ManyToOne
     @JoinColumn
     private ParkingLot parkingLot;
 
-    public Spot(){}
 
-    public Spot(int pricePerHour, SpotType spotType, boolean occupied) {
-        this.pricePerHour = pricePerHour;
+    @OneToMany(mappedBy = "spot",cascade = CascadeType.ALL)
+    private List<Reservation> reservationList=new ArrayList<>();
+
+
+    public Spot(SpotType spotType, int pricePerHour) {
         this.spotType = spotType;
-        this.occupied = occupied;
+        this.pricePerHour = pricePerHour;
+        this.occupied=false;
     }
 
-    @OneToMany(mappedBy = "reservation",cascade = CascadeType.ALL)
-    private List<Reservation> reservationList;
+    public Spot() {
+        this.occupied=false;
+    }
 
     public int getId() {
         return id;
@@ -33,14 +44,6 @@ public class Spot {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getPricePerHour() {
-        return pricePerHour;
-    }
-
-    public void setPricePerHour(int pricePerHour) {
-        this.pricePerHour = pricePerHour;
     }
 
     public SpotType getSpotType() {
@@ -51,11 +54,19 @@ public class Spot {
         this.spotType = spotType;
     }
 
-    public boolean getOccupied() {
+    public int getPricePerHour() {
+        return pricePerHour;
+    }
+
+    public void setPricePerHour(int pricePerHour) {
+        this.pricePerHour = pricePerHour;
+    }
+
+    public Boolean getOccupied() {
         return occupied;
     }
 
-    public void setOccupied(boolean occupied) {
+    public void setOccupied(Boolean occupied) {
         this.occupied = occupied;
     }
 

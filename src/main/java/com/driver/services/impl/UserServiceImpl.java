@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,7 +22,6 @@ public class UserServiceImpl implements UserService {
     public User updatePassword(Integer userId, String password) {
         User user=userRepository4.findById(userId).get();
         user.setPassword(password);
-        //them
         userRepository4.save(user);
         return user;
     }

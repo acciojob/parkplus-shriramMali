@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.driver.model.SpotType.*;
-
 @Service
 public class ParkingLotServiceImpl implements ParkingLotService {
     @Autowired
@@ -22,7 +20,6 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     SpotRepository spotRepository1;
     @Override
     public ParkingLot addParkingLot(String name, String address) {
-
         ParkingLot parkingLot=new ParkingLot(name,address);
         parkingLotRepository1.save(parkingLot);
         return parkingLot;
@@ -30,61 +27,69 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
     @Override
     public Spot addSpot(int parkingLotId, Integer numberOfWheels, Integer pricePerHour) {
-     Spot spot=new Spot();
-
-     if(numberOfWheels==0 ||numberOfWheels==1) numberOfWheels=2;
-     else if(numberOfWheels==3)numberOfWheels=4;
-
-     if(numberOfWheels==2) spot.setSpotType(TWO_WHEELER);
-     else if (numberOfWheels==4) spot.setSpotType(FOUR_WHEELER);
-     else spot.setSpotType(OTHERS);
-    // spot.setOccupied(false);
-     spot.setPricePerHour(pricePerHour);
-
-     ParkingLot parkingLot=parkingLotRepository1.findById(parkingLotId).get();
-     parkingLot.getSpotList().add(spot);
-     spot.setParkingLot(parkingLot);
-
-      //  parkingLot.getSpotList().add(spot);
-
-    return spot;
-    }
-
-    @Override
-    public void deleteSpot(int spotId) {
-    //Spot spot=spotRepository1.findById(spotId).get();
-  //  ParkingLot parkingLot=spot.getParkingLot();
-    //if (parkingLot.getSpotList().contains(spot))
-    //parkingLot.getSpotList().remove(spot);
-
-  //  if (spotRepository1.existsById(spotId))
-    spotRepository1.deleteById(spotId);
-    }
-
-    @Override
-    public Spot updateSpot(int parkingLotId, int spotId, int pricePerHour) {
-        Spot spot=spotRepository1.findById(spotId).get();
-        ParkingLot parkingLot=parkingLotRepository1.findById(parkingLotId).get();
-
-        spot.setParkingLot(parkingLot);
-      //  parkingLot.getSpotList().remove(spot);
+        Spot spot=new Spot();
         spot.setPricePerHour(pricePerHour);
+        if(numberOfWheels>4){
+            spot.setSpotType(SpotType.OTHERS);
+        }
+        else if(numberOfWheels>2){
+            spot.setSpotType(SpotType.FOUR_WHEELER);
+        }
+        else spot.setSpotType(SpotType.TWO_WHEELER);
 
-       // parkingLotRepository1.save(parkingLot);
-        spotRepository1.save(spot);
+        ParkingLot parkingLot=parkingLotRepository1.findById(parkingLotId).get();
+        spot.setParkingLot(parkingLot);
+
+        //bidirectional
+        parkingLot.getSpotList().add(spot);
+
+        parkingLotRepository1.save(parkingLot);
+
 
         return spot;
     }
 
     @Override
-    public void deleteParkingLot(int parkingLotId) {
-        ParkingLot parkingLot=parkingLotRepository1.findById(parkingLotId).get();
+    public void deleteSpot(int spotId) {
 
-     //   List<Spot> list=parkingLot.getSpotList();
-       // for (Spot spot:list){
-         //   spot.setParkingLot(null);
-        //}
-       //if(parkingLotRepository1.existsById(parkingLotId))
-        parkingLotRepository1.delete(parkingLot);
+        spotRepository1.deleteById(spotId);
+    }
+
+    @Override
+    public Spot updateSpot(int parkingLotId, int spotId, int pricePerHour) {
+
+        ParkingLot parkingLot = parkingLotRepository1.findById(parkingLotId).get();
+
+
+
+        Spot spot=null;
+        List<Spot> spotList=parkingLot.getSpotList();
+        for(Spot spot1:spotList){
+            if(spot1.getId()==spotId)
+                spot=spot1;
+        }
+
+
+
+
+        //Spot spot = spotRepository1.findById(spotId).get();
+
+
+        spot.setParkingLot(parkingLot);
+        spot.setPricePerHour(pricePerHour);
+
+        // parkingLotRepository1.save(parkingLot);
+
+        spotRepository1.save(spot);
+
+        return spot;
+
+
+
+    }
+
+    @Override
+    public void deleteParkingLot(int parkingLotId) {
+        parkingLotRepository1.deleteById(parkingLotId);
     }
 }
