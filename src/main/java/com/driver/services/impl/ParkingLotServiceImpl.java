@@ -44,8 +44,6 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         parkingLot.getSpotList().add(spot);
 
         parkingLotRepository1.save(parkingLot);
-
-
         return spot;
     }
 
@@ -60,8 +58,6 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
         ParkingLot parkingLot = parkingLotRepository1.findById(parkingLotId).get();
 
-
-
         Spot spot=null;
         List<Spot> spotList=parkingLot.getSpotList();
         for(Spot spot1:spotList){
@@ -69,27 +65,24 @@ public class ParkingLotServiceImpl implements ParkingLotService {
                 spot=spot1;
         }
 
-
-
-
         //Spot spot = spotRepository1.findById(spotId).get();
-
 
         spot.setParkingLot(parkingLot);
         spot.setPricePerHour(pricePerHour);
 
         // parkingLotRepository1.save(parkingLot);
-
         spotRepository1.save(spot);
 
+
+        /* as we not deleting or modifing anything just updating so n need to save it and as its not there so saving to spot repo */
         return spot;
-
-
 
     }
 
     @Override
     public void deleteParkingLot(int parkingLotId) {
+
         parkingLotRepository1.deleteById(parkingLotId);
+
     }
 }

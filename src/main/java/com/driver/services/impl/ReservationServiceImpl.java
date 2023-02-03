@@ -39,15 +39,12 @@ public class ReservationServiceImpl implements ReservationService {
             boolean checkForSpots = false;
             for (Spot spot : spotList) {
                 if (!spot.getOccupied()) {
-                    checkForSpots = true;
+                    checkForSpots = true;   //just 4 checking if all spots are booked
                     break;
                 }
             }
 
-            if (!checkForSpots) {
-                throw new Exception("Cannot make reservation");
-            }
-
+            if (!checkForSpots) throw new Exception("Cannot make reservation");
 
             SpotType requestSpotType;
 
